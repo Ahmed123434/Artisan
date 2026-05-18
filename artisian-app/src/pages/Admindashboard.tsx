@@ -19,8 +19,8 @@ const outlineBtn: React.CSSProperties = { border: `2px solid ${C.orange}`, color
 const inputBase: React.CSSProperties = { width: "100%", border: `1px solid ${C.gray300}`, borderRadius: 8, padding: "9px 12px", fontSize: 13, color: C.stone800, background: C.white, boxSizing: "border-box", outline: "none" };
 const badge: React.CSSProperties = { fontSize: 10, fontWeight: 700, padding: "3px 8px", borderRadius: 20 };
 
-const API = "http://localhost:5000/api";
-const BASE = "http://localhost:5000";
+const API = "https://artisan-backend-gbby.onrender.com/api";
+const BASE = "https://artisan-backend-gbby.onrender.com";
 
 interface User { id: number; name: string; email: string; phone: string; role: string; shop_name: string; category: string; status: string; created_at: string; }
 interface Product { id: number; name: string; price: number; category: string; artisan_name: string; status: string; stock: number; image: string | null; description: string; }

@@ -80,7 +80,7 @@ const errText: React.CSSProperties = {
   marginTop: 3 
 };
 
-const API = "http://localhost:5000/api";
+const API = "https://artisan-backend-gbby.onrender.com/api";
 
 interface Product { 
   id: number; 

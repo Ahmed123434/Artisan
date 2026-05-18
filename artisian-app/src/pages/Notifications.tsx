@@ -14,7 +14,7 @@ const C = {
 const wrap: React.CSSProperties = { maxWidth: 800, margin: "0 auto", padding: "0 40px" };
 const outlineBtn: React.CSSProperties = { border: `2px solid ${C.orange}`, color: C.orange, fontWeight: 700, background: C.white, borderRadius: 8, padding: "6px 14px", fontSize: 13, cursor: "pointer" };
 
-const API = "http://localhost:5000/api";
+const API = "https://artisan-backend-gbby.onrender.com/api";
 
 interface Notification { id: number; title: string; message: string; type: string; is_read: number; created_at: string; }
 

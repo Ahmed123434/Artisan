@@ -13,7 +13,7 @@ const C = {
 
 const outlineBtn: React.CSSProperties = { border: `2px solid ${C.orange}`, color: C.orange, fontWeight: 700, background: C.white, borderRadius: 8, padding: "6px 14px", fontSize: 13, cursor: "pointer" };
 
-const API = "http://localhost:5000/api";
+const API = "https://artisan-backend-gbby.onrender.com/api";
 
 interface Conversation { id: number; name: string; role: string; shop_name: string; last_message: string; last_time: string; unread: number; }
 interface Message { id: number; sender_id: number; receiver_id: number; message: string; sender_name: string; is_read: number; created_at: string; }

@@ -14,8 +14,8 @@ const wrap: React.CSSProperties = { maxWidth: 1100, margin: "0 auto", padding: "
 const card: React.CSSProperties = { background: C.white, borderRadius: 12, border: `1px solid ${C.gray200}` };
 const outlineBtn: React.CSSProperties = { border: `2px solid ${C.orange}`, color: C.orange, fontWeight: 700, background: C.white, borderRadius: 8, padding: "6px 14px", fontSize: 13, cursor: "pointer" };
 
-const API = "http://localhost:5000/api";
-const BASE = "http://localhost:5000";
+const API = "https://artisan-backend-gbby.onrender.com/api";
+const BASE = "https://artisan-backend-gbby.onrender.com";
 
 interface WishlistItem { id: number; product_id: number; name: string; price: number; category: string; image: string | null; artisan_name: string; stock: number; created_at: string; }
 

@@ -13,8 +13,8 @@ const C = {
 const wrap: React.CSSProperties = { maxWidth: 1100, margin: "0 auto", padding: "0 40px" };
 const outlineBtn: React.CSSProperties = { border: `2px solid ${C.orange}`, color: C.orange, fontWeight: 700, background: C.white, borderRadius: 8, padding: "10px 24px", fontSize: 14, cursor: "pointer", textDecoration: "none" };
 
-const API = "http://localhost:5000/api";
-const BASE = "http://localhost:5000";
+const API = "https://artisan-backend-gbby.onrender.com/api";
+const BASE = "https://artisan-backend-gbby.onrender.com";
 
 interface Product { id: number; name: string; price: number; category: string; artisan_name: string; image: string | null; }
 interface Auction { id: number; product_name: string; current_bid: number; status: string; image: string | null; artisan_name: string; end_time: string; bid_count: number; }

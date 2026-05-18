@@ -18,7 +18,7 @@ const inputBase: React.CSSProperties = { width: "100%", border: `1px solid ${C.g
 const inputErr: React.CSSProperties = { ...inputBase, border: `1px solid ${C.red500}` };
 const labelStyle: React.CSSProperties = { display: "block", fontSize: 12, color: C.gray600, fontWeight: 500, marginBottom: 5 };
 
-const API = "http://localhost:5000/api";
+const API = "https://artisan-backend-gbby.onrender.com/api";
 
 const categories: string[] = ["Pottery & Ceramics", "Woodworking", "Jewelry & Metalwork", "Textiles & Weaving", "Painting & Art", "Leather Crafts", "Glass Blowing", "Other"];
 

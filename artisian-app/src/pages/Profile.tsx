@@ -19,7 +19,7 @@ const inputBase: React.CSSProperties = { width: "100%", border: `1px solid ${C.g
 const labelStyle: React.CSSProperties = { display: "block", fontSize: 12, color: C.gray600, fontWeight: 500, marginBottom: 5 };
 const badge: React.CSSProperties = { fontSize: 10, fontWeight: 700, padding: "3px 8px", borderRadius: 20 };
 
-const API = "http://localhost:5000/api";
+const API = "https://artisan-backend-gbby.onrender.com/api";
 
 interface Order { id: number; total: number; status: string; created_at: string; shipping_address?: string; city?: string; country?: string; phone?: string; payment_method?: string; }
 

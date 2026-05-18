@@ -16,8 +16,8 @@ const card: React.CSSProperties = { background: C.white, borderRadius: 12, borde
 const outlineBtn: React.CSSProperties = { border: `2px solid ${C.orange}`, color: C.orange, fontWeight: 700, background: C.white, borderRadius: 8, padding: "6px 14px", fontSize: 13, cursor: "pointer" };
 const badge: React.CSSProperties = { fontSize: 10, fontWeight: 700, padding: "3px 10px", borderRadius: 20 };
 
-const API = "http://localhost:5000/api";
-const BASE = "http://localhost:5000";
+const API = "https://artisan-backend-gbby.onrender.com/api";
+const BASE = "https://artisan-backend-gbby.onrender.com";
 
 interface Bid { id: number; bidder_name: string; amount: number; created_at: string; }
 interface AuctionData { id: number; product_name: string; product_description: string; category: string; image: string | null; artisan_name: string; start_bid: number; current_bid: number; status: string; start_time: string; end_time: string; bids: Bid[]; }

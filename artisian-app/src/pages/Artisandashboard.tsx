@@ -20,8 +20,8 @@ const inputBase: React.CSSProperties = { width: "100%", border: `1px solid ${C.g
 const labelStyle: React.CSSProperties = { display: "block", fontSize: 12, color: C.gray600, fontWeight: 500, marginBottom: 5 };
 const bdg: React.CSSProperties = { fontSize: 10, fontWeight: 700, padding: "3px 8px", borderRadius: 20 };
 
-const API = "http://localhost:5000/api";
-const BASE = "http://localhost:5000";
+const API = "https://artisan-backend-gbby.onrender.com/api";
+const BASE = "https://artisan-backend-gbby.onrender.com";
 
 interface Product { id: number; name: string; description: string; price: number; category: string; stock: number; status: string; image: string | null; }
 interface Order { id: number; product_name: string; customer_name: string; customer_email: string; customer_phone: string; quantity: number; price: number; status: string; created_at: string; shipping_address: string; city: string; country: string; phone: string; payment_method: string; }
