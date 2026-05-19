@@ -101,7 +101,7 @@ const Auctions: React.FC = () => {
             {filtered.map((a) => (
               <div key={a.id} style={card} onClick={() => setSelectedAuction(a.id)}>
                 {a.image ? (
-                  <img src={`${BASE}${a.image}`} style={{ width: "100%", height: 180, objectFit: "cover" }} />
+                  <img src={a.image?.startsWith('http') ? a.image : `${BASE}${a.image}`} style={{ width: "100%", height: 180, objectFit: "cover" }} />
                 ) : (
                   <div style={{ height: 180, background: C.orangeLight, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, color: "#712B13" }}>{a.category} auction</div>
                 )}

@@ -73,7 +73,7 @@ const ArtisanDashboard: React.FC = () => {
     } catch(e){}
   };
 
-  const openEdit = (p: Product) => { setEditP(p); setEName(p.name); setECat(p.category); setEPrice(String(p.price)); setEStock(String(p.stock)); setEDesc(p.description||""); setEStatus(p.status); setEImage(null); setEPreview(p.image?`${BASE}${p.image}`:""); };
+  const openEdit = (p: Product) => { setEditP(p); setEName(p.name); setECat(p.category); setEPrice(String(p.price)); setEStock(String(p.stock)); setEDesc(p.description||""); setEStatus(p.status); setEImage(null); setEPreview(p.image?p.image && p.image.startsWith('http') ? p.image : p.image?.startsWith('http') ? p.image : `${BASE}${p.image}`:""); };
 
   const saveEdit = async () => {
     if (!editP||!eName||!ePrice) return;
@@ -288,7 +288,7 @@ const ArtisanDashboard: React.FC = () => {
             {products.length === 0 ? <div style={{textAlign:"center",padding:20,color:C.gray400}}>No products yet</div> :
             products.slice(0,5).map(p=>(
               <div key={p.id} style={{display:"flex",alignItems:"center",gap:10,padding:"9px 0",borderBottom:`0.5px solid ${C.gray100}`,cursor:"pointer"}} onClick={()=>openEdit(p)}>
-                {p.image ? <img src={`${BASE}${p.image}`} style={{width:36,height:36,borderRadius:6,objectFit:"cover"}}/> : <div style={{width:36,height:36,borderRadius:6,background:C.orangeLight,display:"flex",alignItems:"center",justifyContent:"center",fontSize:10,color:"#712B13"}}>{p.category[0]}</div>}
+                {p.image ? <img src={p.image && p.image.startsWith('http') ? p.image : p.image?.startsWith('http') ? p.image : `${BASE}${p.image}`} style={{width:36,height:36,borderRadius:6,objectFit:"cover"}}/> : <div style={{width:36,height:36,borderRadius:6,background:C.orangeLight,display:"flex",alignItems:"center",justifyContent:"center",fontSize:10,color:"#712B13"}}>{p.category[0]}</div>}
                 <div style={{flex:1}}>
                   <div style={{fontSize:13,fontWeight:600,color:C.gray700}}>{p.name}</div>
                   <div style={{fontSize:11,color:C.gray400}}>Stock: {p.stock} • BHD {Number(p.price).toFixed(2)}</div>
@@ -358,7 +358,7 @@ const ArtisanDashboard: React.FC = () => {
         <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:16}}>
           {products.length===0?<div style={{...card,padding:40,textAlign:"center",gridColumn:"1/-1",color:C.gray400}}>No products yet — add your first product!</div>:products.map(p=>(
             <div key={p.id} style={{...card,padding:0,overflow:"hidden",cursor:"pointer"}} onClick={()=>openEdit(p)}>
-              {p.image?<img src={`${BASE}${p.image}`} style={{width:"100%",height:140,objectFit:"contain",background:C.stone50}}/>:<div style={{height:140,background:C.orangeLight,display:"flex",alignItems:"center",justifyContent:"center",fontSize:13,color:"#712B13"}}>{p.category}</div>}
+              {p.image?<img src={p.image && p.image.startsWith('http') ? p.image : p.image?.startsWith('http') ? p.image : `${BASE}${p.image}`} style={{width:"100%",height:140,objectFit:"contain",background:C.stone50}}/>:<div style={{height:140,background:C.orangeLight,display:"flex",alignItems:"center",justifyContent:"center",fontSize:13,color:"#712B13"}}>{p.category}</div>}
               <div style={{padding:12}}>
                 <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:4}}>
                   <span style={{fontSize:14,fontWeight:700,color:C.gray700}}>{p.name}</span>
@@ -400,7 +400,7 @@ const ArtisanDashboard: React.FC = () => {
         <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:16}}>
           {auctions.length===0?<div style={{...card,padding:40,textAlign:"center",gridColumn:"1/-1",color:C.gray400}}>No auctions yet</div>:auctions.map(a=>(
             <div key={a.id} style={{...card,padding:0,overflow:"hidden",cursor:"pointer"}} onClick={()=>setViewAuction(a)}>
-              {a.image?<img src={`${BASE}${a.image}`} style={{width:"100%",height:140,objectFit:"contain",background:C.stone50}}/>:<div style={{height:140,background:C.orangeLight,display:"flex",alignItems:"center",justifyContent:"center",fontSize:13,color:"#712B13"}}>Auction</div>}
+              {a.image?<img src={a.image?.startsWith('http') ? a.image : `${BASE}${a.image}`} style={{width:"100%",height:140,objectFit:"contain",background:C.stone50}}/>:<div style={{height:140,background:C.orangeLight,display:"flex",alignItems:"center",justifyContent:"center",fontSize:13,color:"#712B13"}}>Auction</div>}
               <div style={{padding:12}}>
                 <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:6}}><span style={{fontSize:14,fontWeight:700,color:C.gray700}}>{a.product_name}</span><span style={{...bdg,...ss(a.status)}}>{a.status}</span></div>
                 <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:6}}>

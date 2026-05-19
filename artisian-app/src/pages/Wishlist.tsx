@@ -86,7 +86,7 @@ const Wishlist: React.FC = () => {
           <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 20 }}>
             {items.map((item) => (
               <div key={item.id} style={{ ...card, overflow: "hidden" }}>
-                {item.image ? <img src={`${BASE}${item.image}`} style={{ width: "100%", height: 180, objectFit: "cover" }} /> : <div style={{ height: 180, background: C.orangeLight, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, color: "#712B13" }}>{item.category}</div>}
+                {item.image ? <img src={item.image?.startsWith('http') ? item.image : `${BASE}${item.image}`} style={{ width: "100%", height: 180, objectFit: "cover" }} /> : <div style={{ height: 180, background: C.orangeLight, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, color: "#712B13" }}>{item.category}</div>}
                 <div style={{ padding: 16 }}>
                   <div style={{ fontSize: 15, fontWeight: 700, color: C.gray700, marginBottom: 4 }}>{item.name}</div>
                   <div style={{ fontSize: 13, color: C.gray400, marginBottom: 8 }}>by {item.artisan_name}</div>

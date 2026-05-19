@@ -125,7 +125,7 @@ const AdminDashboard: React.FC = () => {
         </div>
         <div style={{ maxWidth: 800, margin: "32px auto", padding: "0 40px" }}>
           <div style={{ ...card, padding: 0, overflow: "hidden" }}>
-            {p.image && <img src={`${BASE}${p.image}`} style={{ width: "100%", height: 300, objectFit: "contain", background: C.stone50 }} />}
+            {p.image && <img src={p.image && p.image.startsWith('http') ? p.image : p.image?.startsWith('http') ? p.image : `${BASE}${p.image}`} style={{ width: "100%", height: 300, objectFit: "contain", background: C.stone50 }} />}
             <div style={{ padding: 24 }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
                 <h2 style={{ fontSize: 24, fontWeight: 700, color: C.gray700, margin: 0 }}>{p.name}</h2>
@@ -307,7 +307,7 @@ const AdminDashboard: React.FC = () => {
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 16 }}>
           {filteredProducts.map((p) => (
             <div key={p.id} style={{ ...card, padding: 0, overflow: "hidden", cursor: "pointer" }} onClick={() => setSelectedProduct(p)}>
-              {p.image ? <img src={`${BASE}${p.image}`} style={{ width: "100%", height: 160, objectFit: "contain", background: C.stone50 }} /> : <div style={{ height: 160, background: C.stone50, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, color: C.gray400 }}>{p.category}</div>}
+              {p.image ? <img src={p.image && p.image.startsWith('http') ? p.image : p.image?.startsWith('http') ? p.image : `${BASE}${p.image}`} style={{ width: "100%", height: 160, objectFit: "contain", background: C.stone50 }} /> : <div style={{ height: 160, background: C.stone50, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, color: C.gray400 }}>{p.category}</div>}
               <div style={{ padding: 14 }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 6 }}>
                   <span style={{ fontSize: 14, fontWeight: 700, color: C.gray700 }}>{p.name}</span>

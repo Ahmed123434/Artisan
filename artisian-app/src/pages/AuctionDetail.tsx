@@ -116,7 +116,7 @@ const AuctionDetail: React.FC = () => {
           {/* Left: Image */}
           <div>
             {auction.image ? (
-              <img src={`${BASE}${auction.image}`} style={{ width: "100%", height: 400, objectFit: "contain", borderRadius: 12, background: "#F1EFE8" }} />
+              <img src={auction.image?.startsWith('http') ? auction.image : `${BASE}${auction.image}`} style={{ width: "100%", height: 400, objectFit: "contain", borderRadius: 12, background: "#F1EFE8" }} />
             ) : (
               <div style={{ height: 400, background: C.orangeLight, borderRadius: 12, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 14, color: "#712B13" }}>{auction.category} auction</div>
             )}
