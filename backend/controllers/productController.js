@@ -6,7 +6,6 @@ const getProducts = async (req, res) => {
     const [products] = await pool.query(
       "SELECT p.*, u.name as artisan_name FROM products p JOIN users u ON p.artisan_id = u.id WHERE p.status = 'approved' ORDER BY p.created_at DESC"
     );
-    // Attach extra images for each product
     for (const product of products) {
       const [images] = await pool.query("SELECT image FROM product_images WHERE product_id = ? ORDER BY is_primary DESC", [product.id]);
       product.extra_images = images.map(i => i.image);
@@ -39,16 +38,17 @@ const createProduct = async (req, res) => {
     const { name, description, price, category, stock } = req.body;
     const artisan_id = req.user.id;
     const files = req.files || [];
-    const primaryImage = files.length > 0 ? `/uploads/${files[0].filename}` : null;
+
+    // Use Cloudinary URL instead of local path
+    const primaryImage = files.length > 0 ? files[0].path : null;
 
     const [result] = await pool.query(
-      "INSERT INTO products (name, description, price, category, stock, artisan_id, image, status) VALUES (?, ?, ?, ?, ?, ?, ?, 'pending')",
+      "INSERT INTO products (name, description, price, category, stock, artisan_id, image, status) VALUES (?, ?, ?, ?, ?, ?, ?, 'approved')",
       [name, description, price, category, stock || 0, artisan_id, primaryImage]
     );
 
-    // Save all images to product_images table
     for (let i = 0; i < files.length; i++) {
-      const imgPath = `/uploads/${files[i].filename}`;
+      const imgPath = files[i].path; // Cloudinary URL
       await pool.query(
         "INSERT INTO product_images (product_id, image, is_primary) VALUES (?, ?, ?)",
         [result.insertId, imgPath, i === 0 ? 1 : 0]
@@ -72,12 +72,10 @@ const updateProduct = async (req, res) => {
     let primaryImage = products[0].image;
 
     if (files.length > 0) {
-      primaryImage = `/uploads/${files[0].filename}`;
-      // Delete old extra images
+      primaryImage = files[0].path; // Cloudinary URL
       await pool.query("DELETE FROM product_images WHERE product_id = ?", [req.params.id]);
-      // Save new images
       for (let i = 0; i < files.length; i++) {
-        const imgPath = `/uploads/${files[i].filename}`;
+        const imgPath = files[i].path;
         await pool.query(
           "INSERT INTO product_images (product_id, image, is_primary) VALUES (?, ?, ?)",
           [req.params.id, imgPath, i === 0 ? 1 : 0]
