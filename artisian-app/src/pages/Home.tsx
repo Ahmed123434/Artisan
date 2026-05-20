@@ -174,7 +174,7 @@ fetch(`${API}/users/artisan-count`).then(r => r.json()).then(d => setArtisanCoun
           <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 20 }}>
             {liveAuctions.slice(0, 3).map((a) => (
               <a key={a.id} href={`/auction-detail?id=${a.id}`} style={{ background: C.white, borderRadius: 12, border: `1px solid ${C.gray200}`, overflow: "hidden", textDecoration: "none" }}>
-                {a.image ? <img src={a.image?.startsWith('http') ? a.image : a.image?.startsWith('http') ? a.image : `${BASE}${a.image}`} style={{ width: "100%", height: 160, objectFit: "cover" }} /> : <div style={{ height: 160, background: C.orangeLight, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, color: "#712B13" }}>Auction</div>}
+                {a.image ? <img src={a.image?.startsWith('http') ? a.image : a.image?.startsWith('http') ? a.image : `${BASE}${a.image}`} style={{ width: "100%", height: 160, objectFit: "contain" }} /> : <div style={{ height: 160, background: C.orangeLight, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, color: "#712B13" }}>Auction</div>}
                 <div style={{ padding: 16 }}>
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
                     <span style={{ fontSize: 10, fontWeight: 700, padding: "3px 10px", borderRadius: 20, background: a.status === "live" ? "#DCFCE7" : "#FEF3C7", color: a.status === "live" ? "#14532D" : "#92400E" }}>{a.status}</span>

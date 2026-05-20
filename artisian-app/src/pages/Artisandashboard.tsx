@@ -160,7 +160,7 @@ const ArtisanDashboard: React.FC = () => {
       <div style={{maxWidth:700,margin:"32px auto",padding:"0 40px"}}>
         <div style={{...card,padding:24}}>
           <div style={{fontSize:20,fontWeight:700,color:C.orange,marginBottom:20}}>Edit: {editP.name}</div>
-          {ePreview && <img src={ePreview} style={{width:"100%",height:250,objectFit:"cover",borderRadius:12,marginBottom:16}} />}
+          {ePreview && <img src={ePreview} style={{width:"100%",height:250,objectFit:"contain",borderRadius:12,marginBottom:16}} />}
           <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:14}}>
             <div><label style={labelStyle}>Name</label><input value={eName} onChange={e=>setEName(e.target.value)} style={inputBase}/></div>
             <div><label style={labelStyle}>Category</label><select value={eCat} onChange={e=>setECat(e.target.value)} style={{...inputBase,color:eCat?C.stone800:C.gray400}}><option value="">Select...</option>{["Pottery","Textiles","Jewelry","Painting","Woodwork"].map(c=><option key={c} value={c}>{c}</option>)}</select></div>
