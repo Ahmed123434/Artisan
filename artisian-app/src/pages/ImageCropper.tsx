@@ -14,7 +14,7 @@ interface Props {
 
 const ImageCropper: React.FC<Props> = ({ imageSrc, onCropDone, onCancel }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [scale, setScale] = useState(1);
+  const [scale, setScale] = useState(0.3);
   const [offsetX, setOffsetX] = useState(0);
   const [offsetY, setOffsetY] = useState(0);
   const [dragging, setDragging] = useState(false);
@@ -26,7 +26,13 @@ const ImageCropper: React.FC<Props> = ({ imageSrc, onCropDone, onCancel }) => {
     const img = new Image();
     img.onload = () => {
       imgRef.current = img;
-      drawCanvas(img, scale, offsetX, offsetY);
+      const fitScale = Math.min(
+        (SIZE * 0.8) / img.width,
+        (SIZE * 0.8) / img.height
+      );
+      const autoScale = Math.max(fitScale, 0.3);
+      setScale(autoScale);
+      drawCanvas(img, autoScale, 0, 0);
     };
     img.src = imageSrc;
   }, [imageSrc]);
@@ -119,7 +125,7 @@ const ImageCropper: React.FC<Props> = ({ imageSrc, onCropDone, onCancel }) => {
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
             <span style={{ fontSize: 12, color: C.gray700 }}>🔍 Zoom</span>
             <input
-              type="range" min={0.5} max={3} step={0.05} value={scale}
+              type="range" min={0.2} max={3} step={0.05} value={scale}
               onChange={(e) => handleScale(Number(e.target.value))}
               style={{ flex: 1, accentColor: C.orange }}
             />
