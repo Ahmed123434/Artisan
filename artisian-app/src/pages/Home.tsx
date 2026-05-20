@@ -146,7 +146,7 @@ fetch(`${API}/users/artisan-count`).then(r => r.json()).then(d => setArtisanCoun
               {/* Wishlist heart */}
               <button onClick={() => addToWishlist(p.id)} style={{ position: "absolute", top: 10, right: 10, width: 32, height: 32, borderRadius: "50%", background: "rgba(255,255,255,0.9)", border: "none", cursor: "pointer", fontSize: 16, display: "flex", alignItems: "center", justifyContent: "center", zIndex: 1 }}>♡</button>
               <a href="/catalog" style={{ textDecoration: "none" }}>
-                {p.image ? <img src={p.image && p.image.startsWith('http') ? p.image : p.image?.startsWith('http') ? p.image : p.image?.startsWith('http') ? p.image : `${BASE}${p.image}`} style={{ width: "100%", height: 180, objectFit: "cover" }} /> : <div style={{ height: 180, background: C.orangeLight, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, color: "#712B13" }}>{p.category}</div>}
+                {p.image ? <div style={{ height: 180, overflow: "hidden" }}><img src={p.image.startsWith('http') ? p.image : `${BASE}${p.image}`} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top" }} /></div> : <div style={{ height: 180, background: C.orangeLight, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, color: "#712B13" }}>{p.category}</div>}
               </a>
               <div style={{ padding: 16 }}>
                 <a href="/catalog" style={{ textDecoration: "none" }}>
