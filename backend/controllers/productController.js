@@ -43,7 +43,7 @@ const createProduct = async (req, res) => {
     const primaryImage = files.length > 0 ? files[0].path : null;
 
     const [result] = await pool.query(
-      "INSERT INTO products (name, description, price, category, stock, artisan_id, image, status) VALUES (?, ?, ?, ?, ?, ?, ?, 'approved')",
+      "INSERT INTO products (name, description, price, category, stock, artisan_id, image, status) VALUES (?, ?, ?, ?, ?, ?, ?, 'pending')",
       [name, description, price, category, stock || 0, artisan_id, primaryImage]
     );
 
