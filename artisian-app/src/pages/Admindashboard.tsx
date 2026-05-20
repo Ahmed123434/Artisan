@@ -25,6 +25,7 @@ const BASE = "https://artisan-backend-gbby.onrender.com";
 interface User { id: number; name: string; email: string; phone: string; role: string; shop_name: string; category: string; status: string; created_at: string; }
 interface Product { id: number; name: string; price: number; category: string; artisan_name: string; status: string; stock: number; image: string | null; description: string; }
 interface Stats { totalUsers: number; activeArtisans: number; totalOrders: number; totalProducts: number; }
+interface Auction { id: number; product_name: string; artisan_name: string; start_bid: number; current_bid: number; status: string; start_time: string; end_time: string; bid_count: number; image: string | null; }
 interface Order { id: number; customer_name: string; total: number; status: string; created_at: string; }
 
 const AdminDashboard: React.FC = () => {
@@ -32,6 +33,7 @@ const AdminDashboard: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
   const [orders, setOrders] = useState<Order[]>([]);
+  const [auctions, setAuctions] = useState<Auction[]>([]);
   const [stats, setStats] = useState<Stats>({ totalUsers: 0, activeArtisans: 0, totalOrders: 0, totalProducts: 0 });
   const [successMsg, setSuccessMsg] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(true);
@@ -51,9 +53,9 @@ const AdminDashboard: React.FC = () => {
   const fetchProducts = async () => { try { const res = await fetch(`${API}/users/admin/products`, { headers }); if (res.ok) setProducts(await res.json()); } catch (err) { console.error(err); } };
   const fetchStats = async () => { try { const res = await fetch(`${API}/users/admin/stats`, { headers }); if (res.ok) setStats(await res.json()); } catch (err) { console.error(err); } };
   const fetchOrders = async () => { try { const res = await fetch(`${API}/orders/all`, { headers }); if (res.ok) setOrders(await res.json()); } catch (err) { console.error(err); } };
-
+const fetchAuctions = async () => { try { const res = await fetch(`${API}/auctions`, { headers }); if (res.ok) setAuctions(await res.json()); } catch (err) { console.error(err); } };
   useEffect(() => {
-    const load = async () => { setLoading(true); await Promise.all([fetchUsers(), fetchProducts(), fetchStats(), fetchOrders()]); setLoading(false); };
+    const load = async () => { setLoading(true); await Promise.all([fetchUsers(), fetchProducts(), fetchStats(), fetchOrders(), fetchAuctions()]); setLoading(false); };
     load();
   }, []);
 
@@ -70,7 +72,13 @@ const AdminDashboard: React.FC = () => {
       if (res.ok) { showSuccess("Product deleted!"); fetchProducts(); }
     } catch (err) { console.error(err); }
   };
-  
+  const deleteAuction = async (id: number) => {
+  try {
+    const res = await fetch(`${API}/auctions/${id}`, { method: "DELETE", headers });
+    if (res.ok) { showSuccess("Auction deleted!"); fetchAuctions(); }
+  } catch (err) { console.error(err); }
+};
+
   const updateProductStatus = async (id: number, status: string) => {
     try {
       const res = await fetch(`${API}/users/admin/products/${id}`, { method: "PUT", headers, body: JSON.stringify({ status }) });
@@ -450,6 +458,32 @@ case "Reports":
         </div>
       </>);
 
+
+case "Manage auctions": return (<>
+  <div style={{ fontSize: 22, fontWeight: 700, color: C.gray700, marginBottom: 20 }}>Manage Auctions ({auctions.length})</div>
+  <div style={{ ...card, padding: 0, overflow: "hidden" }}>
+    <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
+      <thead><tr style={{ background: C.stone50 }}>{["Product", "Artisan", "Start Bid", "Current Bid", "Status", "End Time", "Bids", "Actions"].map(h => <th key={h} style={{ padding: "12px 16px", textAlign: "left", fontSize: 11, fontWeight: 600, color: C.gray500, textTransform: "uppercase" as const }}>{h}</th>)}</tr></thead>
+      <tbody>{auctions.length === 0 ? <tr><td colSpan={8} style={{ padding: 40, textAlign: "center", color: C.gray400 }}>No auctions yet</td></tr> : auctions.map((a) => (
+        <tr key={a.id} style={{ borderBottom: `0.5px solid ${C.gray100}` }}>
+          <td style={{ padding: "12px 16px", fontWeight: 600, color: C.gray700 }}>{a.product_name}</td>
+          <td style={{ padding: "12px 16px", color: C.gray500 }}>{a.artisan_name}</td>
+          <td style={{ padding: "12px 16px", color: C.gray700 }}>BHD {Number(a.start_bid).toFixed(2)}</td>
+          <td style={{ padding: "12px 16px", fontWeight: 700, color: C.orange }}>BHD {Number(a.current_bid).toFixed(2)}</td>
+          <td style={{ padding: "12px 16px" }}><span style={{ ...badge, ...getStatusStyle(a.status) }}>{a.status}</span></td>
+          <td style={{ padding: "12px 16px", color: C.gray400, fontSize: 12 }}>{new Date(a.end_time).toLocaleString()}</td>
+          <td style={{ padding: "12px 16px", textAlign: "center", fontWeight: 700, color: C.gray700 }}>{a.bid_count}</td>
+          <td style={{ padding: "12px 16px" }}>
+            <button onClick={() => { if(confirm("Delete this auction?")) deleteAuction(a.id); }} style={{ ...outlineBtn, fontSize: 11, padding: "4px 10px", borderColor: C.red500, color: C.red500 }}>🗑 Delete</button>
+          </td>
+        </tr>
+      ))}</tbody>
+    </table>
+  </div>
+</>);
+
+
+
       default: return null;
     }
   };
@@ -472,6 +506,7 @@ case "Reports":
             { label: "Manage products", icon: "🛍" },
             { label: "Orders", icon: "📦" },
             { label: "Reports", icon: "📊" },
+            { label: "Manage auctions", icon: "🔨" },
           ].map((item) => (
             <div key={item.label} onClick={() => setActive(item.label)} style={{ padding: "13px 24px", fontSize: 14, cursor: "pointer", color: active === item.label ? C.orange : C.gray600, background: active === item.label ? C.orangeLight : "transparent", borderRight: active === item.label ? `3px solid ${C.orange}` : "none", fontWeight: active === item.label ? 700 : 400, display: "flex", alignItems: "center", gap: 10 }}>
               <span>{item.icon}</span>{item.label}
