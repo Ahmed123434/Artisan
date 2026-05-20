@@ -306,7 +306,7 @@ const Catalog: React.FC = () => {
                 <div onClick={() => handleSelectProduct(p)} style={{ cursor: "pointer" }}>
                   {p.image ? (
   <div style={{ height: 200, background: C.stone50, display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden" }}>
-    <img src={p.image.startsWith('http') ? p.image : p.image && p.image.startsWith('http') ? p.image : p.image?.startsWith('http') ? p.image : `${BASE}${p.image}`} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+    <img src={p.image.startsWith('http') ? p.image : p.image && p.image.startsWith('http') ? p.image : p.image?.startsWith('http') ? p.image : `${BASE}${p.image}`} style={{ width: "100%", height: "100%", objectFit: "contain", background: C.stone50 }} />
   </div>
 ) : <div style={{ height: 200, background: C.stone50, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, color: C.gray500 }}>{p.category}</div>}
                 </div>
