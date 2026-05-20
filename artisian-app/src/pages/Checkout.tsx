@@ -1,6 +1,27 @@
 // frontend/src/pages/Checkout.tsx
 import { useState, useEffect, useRef } from "react";
+import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
+import L from 'leaflet';
 
+delete (L.Icon.Default.prototype as any)._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
+  iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
+});
+
+const LocationPicker: React.FC<{ setCity: (c: string) => void; setAddressDetails: (a: any) => void }> = ({ setCity, setAddressDetails }) => {
+  const [position, setPosition] = useState<[number, number] | null>(null);
+  useMapEvents({
+    click(e) {
+      setPosition([e.latlng.lat, e.latlng.lng]);
+      setAddressDetails(`Lat: ${e.latlng.lat.toFixed(4)}, Lng: ${e.latlng.lng.toFixed(4)}`);
+      setCity("Bahrain");
+    },
+  });
+  return position ? <Marker position={position} /> : null;
+};
 const C = {
   orange: "#D85A30", 
   orangeLight: "#FAECE7", 
@@ -553,25 +574,20 @@ const Checkout: React.FC = () => {
             {currentStep === 1 && (
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 28 }}>
                 <div>
-                  {/* Location Input */}
+                  {/* Map */}
                   <div style={{ ...card, padding: 16, marginBottom: 16 }}>
                     <div style={{ fontSize: 14, fontWeight: 700, color: C.gray700, marginBottom: 8 }}>
-                      📍 Delivery Location
+                      📍 Pin your location on the map
                     </div>
                     <div style={{ fontSize: 12, color: C.gray400, marginBottom: 10 }}>
-                      Enter your area and city for delivery
+                      Click anywhere on the map to set your delivery location
                     </div>
-                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
-                      <div>
-                        <label style={{ fontSize: 12, color: C.gray600, fontWeight: 600, display: "block", marginBottom: 4 }}>Area / Block</label>
-                        <input value={addressDetails} onChange={(e) => setAddressDetails(e.target.value)} placeholder="e.g. Block 123, Adliya" style={{ width: "100%", border: `1px solid ${C.gray300}`, borderRadius: 8, padding: "9px 12px", fontSize: 13, outline: "none", boxSizing: "border-box" as const }} />
-                      </div>
-                      <div>
-                        <label style={{ fontSize: 12, color: C.gray600, fontWeight: 600, display: "block", marginBottom: 4 }}>City</label>
-                        <input value={city} onChange={(e) => setCity(e.target.value)} placeholder="e.g. Manama" style={{ width: "100%", border: `1px solid ${C.gray300}`, borderRadius: 8, padding: "9px 12px", fontSize: 13, outline: "none", boxSizing: "border-box" as const }} />
-                      </div>
-                    </div>
+                    <MapContainer center={[26.2235, 50.5876]} zoom={12} style={{ height: 280, borderRadius: 8, border: `1px solid ${C.gray200}` }}>
+                      <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                      <LocationPicker setCity={setCity} setAddressDetails={setAddressDetails} />
+                    </MapContainer>
                   </div>
+                   
                   
                   <div style={{ ...card, padding: 24 }}>
                     <div style={{ fontSize: 17, fontWeight: 700, color: C.gray700, borderBottom: `1px solid ${C.gray200}`, paddingBottom: 10, marginBottom: 18 }}>
