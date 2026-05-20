@@ -163,4 +163,15 @@ const getMyAuctions = async (req, res) => {
   }
 };
 
-module.exports = { getAuctions, getAuction, createAuction, placeBid, getMyAuctions };
+const deleteAuction = async (req, res) => {
+  try {
+    await pool.query("DELETE FROM bids WHERE auction_id = ?", [req.params.id]);
+    await pool.query("DELETE FROM auctions WHERE id = ?", [req.params.id]);
+    res.json({ message: "Auction deleted!" });
+  } catch (error) {
+    console.error("Delete auction error:", error);
+    res.status(500).json({ message: "Server error." });
+  }
+};
+
+module.exports = { getAuctions, getAuction, createAuction, placeBid, getMyAuctions, deleteAuction };
