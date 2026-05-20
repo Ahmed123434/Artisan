@@ -86,7 +86,9 @@ const Wishlist: React.FC = () => {
           <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 20 }}>
             {items.map((item) => (
               <div key={item.id} style={{ ...card, overflow: "hidden" }}>
-                {item.image ? <img src={item.image?.startsWith('http') ? item.image : `${BASE}${item.image}`} style={{ width: "100%", height: 180, objectFit: "cover" }} /> : <div style={{ height: 180, background: C.orangeLight, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, color: "#712B13" }}>{item.category}</div>}
+                <a href={`/catalog`} onClick={() => localStorage.setItem("openProduct", String(item.product_id))} style={{ textDecoration: "none" }}>
+  {item.image ? <div style={{ height: 180, overflow: "hidden", background: C.stone50, display: "flex", alignItems: "center", justifyContent: "center" }}><img src={item.image?.startsWith('http') ? item.image : `${BASE}${item.image}`} style={{ width: "100%", height: "100%", objectFit: "contain" }} /></div> : <div style={{ height: 180, background: C.orangeLight, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, color: "#712B13" }}>{item.category}</div>}
+</a>
                 <div style={{ padding: 16 }}>
                   <div style={{ fontSize: 15, fontWeight: 700, color: C.gray700, marginBottom: 4 }}>{item.name}</div>
                   <div style={{ fontSize: 13, color: C.gray400, marginBottom: 8 }}>by {item.artisan_name}</div>
