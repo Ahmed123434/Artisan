@@ -163,11 +163,11 @@ const Catalog: React.FC = () => {
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 40 }}>
             <div>
               {p.image ? (
-  <div style={{ position: "relative", overflow: "hidden", borderRadius: 12, height: 450, background: C.stone50 }}>
+  <div style={{ position: "relative", overflow: "hidden", borderRadius: 12, height: 450, background: C.stone50, display: "flex", alignItems: "center", justifyContent: "center" }}>
     <img
       src={p.image.startsWith('http') ? p.image : p.image && p.image.startsWith('http') ? p.image : p.image?.startsWith('http') ? p.image : `${BASE}${p.image}`}
       id="zoomImg"
-      style={{ width: "100%", height: "100%", objectFit: "cover", cursor: "zoom-in", transform: "scale(1.05)", transition: "transform 0.3s ease", transformOrigin: "center center" }}
+      style={{ width: "100%", height: "100%", objectFit: "contain", cursor: "zoom-in", transition: "transform 0.3s ease", transformOrigin: "center center" }}
       onClick={(e) => {
         const img = e.currentTarget;
         const current = img.style.transform;
