@@ -553,22 +553,24 @@ const Checkout: React.FC = () => {
             {currentStep === 1 && (
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 28 }}>
                 <div>
-                  {/* Leaflet Map */}
+                  {/* Location Input */}
                   <div style={{ ...card, padding: 16, marginBottom: 16 }}>
                     <div style={{ fontSize: 14, fontWeight: 700, color: C.gray700, marginBottom: 8 }}>
-                      📍 Pin your location on the map
+                      📍 Delivery Location
                     </div>
                     <div style={{ fontSize: 12, color: C.gray400, marginBottom: 10 }}>
-                      Click anywhere on the map to auto-fill your address details
+                      Enter your area and city for delivery
                     </div>
-                    <div ref={mapRef} style={{ width: "100%", height: 280, borderRadius: 8, border: `1px solid ${C.gray200}` }} />
-                    <MapLoader 
-                      mapRef={mapRef} 
-                      mapInstanceRef={mapInstanceRef} 
-                      markerRef={markerRef} 
-                      setAddressDetails={setAddressDetails} 
-                      setCity={setCity} 
-                    />
+                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+                      <div>
+                        <label style={{ fontSize: 12, color: C.gray600, fontWeight: 600, display: "block", marginBottom: 4 }}>Area / Block</label>
+                        <input value={addressDetails} onChange={(e) => setAddressDetails(e.target.value)} placeholder="e.g. Block 123, Adliya" style={{ width: "100%", border: `1px solid ${C.gray300}`, borderRadius: 8, padding: "9px 12px", fontSize: 13, outline: "none", boxSizing: "border-box" as const }} />
+                      </div>
+                      <div>
+                        <label style={{ fontSize: 12, color: C.gray600, fontWeight: 600, display: "block", marginBottom: 4 }}>City</label>
+                        <input value={city} onChange={(e) => setCity(e.target.value)} placeholder="e.g. Manama" style={{ width: "100%", border: `1px solid ${C.gray300}`, borderRadius: 8, padding: "9px 12px", fontSize: 13, outline: "none", boxSizing: "border-box" as const }} />
+                      </div>
+                    </div>
                   </div>
                   
                   <div style={{ ...card, padding: 24 }}>
