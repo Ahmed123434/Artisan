@@ -74,6 +74,16 @@ const createAuction = async (req, res) => {
     const { product_id, start_bid, start_time, end_time } = req.body;
     const artisan_id = req.user.id;
 
+    // Convert Bahrain time (UTC+3) to UTC for storage
+    const toUTC = (localTime) => {
+      const date = new Date(localTime);
+      date.setHours(date.getHours() - 3);
+      return date.toISOString().slice(0, 19).replace('T', ' ');
+    };
+
+    const utcStartTime = toUTC(start_time);
+    const utcEndTime = toUTC(end_time);
+
     // Check product belongs to artisan
     const [products] = await pool.query("SELECT * FROM products WHERE id = ? AND artisan_id = ?", [product_id, artisan_id]);
     if (products.length === 0) return res.status(400).json({ message: "Product not found or not yours." });
@@ -84,7 +94,7 @@ const createAuction = async (req, res) => {
 
     const [result] = await pool.query(
       "INSERT INTO auctions (product_id, artisan_id, start_bid, current_bid, status, start_time, end_time) VALUES (?, ?, ?, ?, ?, ?, ?)",
-      [product_id, artisan_id, start_bid, start_bid, 'upcoming', start_time, end_time]
+      [product_id, artisan_id, start_bid, start_bid, 'upcoming', utcStartTime, utcEndTime]
     );
 
     res.status(201).json({ message: "Auction created!", auctionId: result.insertId });
