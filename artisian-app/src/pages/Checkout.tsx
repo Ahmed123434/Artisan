@@ -110,7 +110,8 @@ interface Product {
   category: string; 
   artisan_name: string; 
   description: string; 
-  stock: number; 
+  stock: number;
+  image: string | null;
 }
 
 interface CartItem { 
@@ -481,9 +482,12 @@ const Checkout: React.FC = () => {
                   ) : (
                     cart.map((item) => (
                       <div key={item.product.id} style={{ ...card, display: "flex", alignItems: "center", gap: 16, padding: 16, marginBottom: 12 }}>
-                        <div style={{ width: 60, height: 60, background: C.orangeLight, borderRadius: 8, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, color: "#712B13", flexShrink: 0 }}>
-                          {item.product.category}
-                        </div>
+                        <div style={{ width: 60, height: 60, borderRadius: 8, overflow: "hidden", flexShrink: 0 }}>
+  {item.product.image ?
+    <img src={item.product.image.startsWith('http') ? item.product.image : `https://artisan-backend-gbby.onrender.com${item.product.image}`} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+    : <div style={{ width: 60, height: 60, background: C.orangeLight, borderRadius: 8, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, color: "#712B13" }}>{item.product.category}</div>
+  }
+</div>
                         <div style={{ flex: 1 }}>
                           <div style={{ fontSize: 15, fontWeight: 700, color: C.gray700 }}>{item.product.name}</div>
                           <div style={{ fontSize: 13, color: C.gray400 }}>by {item.product.artisan_name}</div>
